@@ -24,7 +24,7 @@
   var map = new Datamap({
     element: document.getElementById('kecounties'),
     geographyConfig: {
-      dataUrl: '/static/geojson/kecounties.topo.json',
+      dataUrl: '/geojson/kecounties.topo.json',
       popupTemplate: function(geo, data) {
                 var financialInstitutions = (data.financialInstitutions === "YES" ? '<strong class="text-success">Financial Institutions (SACCOS): <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Financial Institutions (SACCOS): <i class="fa fa-times"></i> NONE</strong>');
                 var womenYouthAndDisabled = (data.womenYouthAndDisabled === "YES" ? '<strong class="text-success">Women, Youth and Disabled: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Women, Youth And Disabled: <i class="fa fa-times"></i> NONE</strong>');
