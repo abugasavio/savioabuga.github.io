@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="http://rawgithub.com/markmarkoh/datamaps/master/dist/datamaps.none.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+</head>
+<body>
+<div id="kecounties" style="height: 600px; width: 1000px;"></div>
+<script>
+  var map = new Datamap({
+    element: document.getElementById('kecounties'),
+    geographyConfig: {
+      dataUrl: '/static/geojson/kecounties.topo.json',
+      popupTemplate: function(geo, data) {
+                var financialInstitutions = (data.financialInstitutions === "YES" ? '<strong class="text-success">Financial Institutions (SACCOS): <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Financial Institutions (SACCOS): <i class="fa fa-times"></i> NONE</strong>');
+                var womenYouthAndDisabled = (data.womenYouthAndDisabled === "YES" ? '<strong class="text-success">Women, Youth and Disabled: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Women, Youth And Disabled: <i class="fa fa-times"></i> NONE</strong>');
+                var waterSanitationAndHealth = (data.waterSanitationAndHealth === "YES" ? '<strong class="text-success">Water, Sanitation and Health: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Water, Sanitation and Health: <i class="fa fa-times"></i> NONE</strong>');
+                var smes = (data.smes === "YES" ? '<strong class="text-success">SMEs: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">SMEs: <i class="fa fa-times"></i> NONE</strong>');
+                var education = (data.education === "YES" ? '<strong class="text-success">Education: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Education: <i class="fa fa-times"></i> NONE</strong>');
+                var agricultureAndLivestock = (data.agricultureAndLivestock === "YES" ? '<strong class="text-success">Agricultural and Livestock: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Agricultural and Livestock: <i class="fa fa-times"></i> NONE</strong>');
+                return ['<div class="hoverinfo"><strong>',
+                        geo.properties.name + ' County' + '</strong><br/>',
+                        financialInstitutions + '<br/>',
+                        womenYouthAndDisabled + '<br/>',
+                        waterSanitationAndHealth + '<br/>',
+                        smes + '<br/>',
+                        education + '<br/>',
+                        agricultureAndLivestock + '<br/>',
+                        '</div>'].join('');
+
+            }
+    },
+    scope: 'kecounties',
+    fills: {
+        YES: '#fe9128',
+        NO: '#7e8183',
+        defaultFill: '#CDCCCC'
+      },
+    data: {
+        // KILIFI
+        KL: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // KWALE
+        KW: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // LAMU
+        LM: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // MOMBASA
+        MB: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "NO"},
+        // TAITA TAVETA
+        TT: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // TANA RIVER
+        TR: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // EMBU
+        EB: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // KIAMBU
+        KB: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // KIRINYAGA
+        KG: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "NO",
+              agricultureAndLivestock: "YES"},
+        // LAIKIPIA
+        LP: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // MERU
+        ME: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // MURANG'A
+        MU: { fillKey: "NO",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // NYANDARUA
+        NN: { fillKey: "NO",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // NYERI
+        NE: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+       // NYERI
+       TN: { fillKey: "YES",
+             financialInstitutions: "YES",
+             womenYouthAndDisabled: "YES",
+             waterSanitationAndHealth: "YES",
+             smes: "NO",
+             education: "YES",
+             agricultureAndLivestock: "NO"},
+
+        // BARINGO
+        BA: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "NO"},
+        // ELEGEYO-MARAKWET
+        EM: { fillKey: "NO",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // NANDI
+        ND: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // SAMBURU
+        SA: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // TRANS NZOIA
+        TZ: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // TURKANA
+        TU: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // UASIN GISHU
+        UG: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // WEST POKOT
+        WP: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // BOMET
+        BO: { fillKey: "YES",
+              financialInstitutions: "No",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // BUNGOMA
+        BM: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // BUSIA
+        BS: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // HOMABAY
+        HB: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // KAKAMEGA
+        KM: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // KERICHO
+        KE: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // KISII
+        KS: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "YES",
+              education: "NO",
+              agricultureAndLivestock: "YES"},
+        // KISUMU
+        KU: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // MIGORI
+        MI: { fillKey: "NO",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "NO",
+              agricultureAndLivestock: "NO"},
+        // NYAMIRA
+        NY: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // SIAYA
+        SI: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "NO",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // VIHIGA
+        VI: { fillKey: "YES",
+              financialInstitutions: "YES",
+              womenYouthAndDisabled: "NO",
+              waterSanitationAndHealth: "YES",
+              smes: "YES",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+        // GARISSA
+        GS: { fillKey: "YES",
+              financialInstitutions: "NO",
+              womenYouthAndDisabled: "YES",
+              waterSanitationAndHealth: "YES",
+              smes: "NO",
+              education: "YES",
+              agricultureAndLivestock: "YES"},
+         // ISIOLO
+         IS: { fillKey: "NO",
+               financialInstitutions: "NO",
+               womenYouthAndDisabled: "NO",
+               waterSanitationAndHealth: "NO",
+               smes: "NO",
+               education: "NO",
+               agricultureAndLivestock: "NO"},
+         // KAJIADO
+         KJ: { fillKey: "NO",
+               financialInstitutions: "NO",
+               womenYouthAndDisabled: "YES",
+               waterSanitationAndHealth: "YES",
+               smes: "YES",
+               education: "YES",
+               agricultureAndLivestock: "YES"},
+          // KITUI
+          KT: { fillKey: "YES",
+                financialInstitutions: "YES",
+                womenYouthAndDisabled: "YES",
+                waterSanitationAndHealth: "YES",
+                smes: "YES",
+                education: "YES",
+                agricultureAndLivestock: "YES"},
+          // MACHAKOS
+          MC: { fillKey: "YES",
+                financialInstitutions: "NO",
+                womenYouthAndDisabled: "YES",
+                waterSanitationAndHealth: "YES",
+                smes: "YES",
+                education: "YES",
+                agricultureAndLivestock: "NO"},
+           // MAKUENI
+           MK: { fillKey: "NO",
+                 financialInstitutions: "YES",
+                 womenYouthAndDisabled: "YES",
+                 waterSanitationAndHealth: "YES",
+                 smes: "YES",
+                 education: "YES",
+                 agricultureAndLivestock: "YES"},
+          // MANDERA
+          MN: { fillKey: "NO",
+                financialInstitutions: "YES",
+                womenYouthAndDisabled: "YES",
+                waterSanitationAndHealth: "YES",
+                smes: "YES",
+                education: "YES",
+                agricultureAndLivestock: "YES"},
+          // MARSABIT
+          MR: { fillKey: "YES",
+                financialInstitutions: "YES",
+                womenYouthAndDisabled: "YES",
+                waterSanitationAndHealth: "YES",
+                smes: "YES",
+                education: "YES",
+                agricultureAndLivestock: "YES"},
+           // NAIROBI
+           NB: { fillKey: "NO",
+                 financialInstitutions: "NO",
+                 womenYouthAndDisabled: "NO",
+                 waterSanitationAndHealth: "YES",
+                 smes: "YES",
+                 education: "NO",
+                 agricultureAndLivestock: "NO"},
+            // NAKURU
+            NK: { fillKey: "YES",
+                  financialInstitutions: "YES",
+                  womenYouthAndDisabled: "YES",
+                  waterSanitationAndHealth: "YES",
+                  smes: "YES",
+                  education: "YES",
+                  agricultureAndLivestock: "YES"},
+            // NAROK
+            NR: { fillKey: "NO",
+                  financialInstitutions: "YES",
+                  womenYouthAndDisabled: "YES",
+                  waterSanitationAndHealth: "YES",
+                  smes: "NO",
+                  education: "YES",
+                  agricultureAndLivestock: "YES"},
+             // WAJIR
+             WJ: { fillKey: "YES",
+                   financialInstitutions: "NO",
+                   womenYouthAndDisabled: "YES",
+                   waterSanitationAndHealth: "YES",
+                   smes: "NO",
+                   education: "YES",
+                   agricultureAndLivestock: "YES"},
+
+    },
+
+    setProjection: function(element) {
+      var projection = d3.geo.mercator()
+        .center([35, 0.6])
+        .scale(3000)
+        .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+       var path = d3.geo.path().projection(projection);
+       return {path: path, projection: projection};
+    }
+
+
+  });
+</script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">s</script>
+</body>
+</html>
