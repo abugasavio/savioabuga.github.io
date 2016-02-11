@@ -19,6 +19,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 </head>
 <body>
+<div class="page-header text-center">
+  <h1>County Investment Matrix</h1>
+  <h2><small>Review and Analysis of County Website Information about Sectors and Groups</small></h2>
+</div>
 <div id="kecounties" style="height: 600px; width: 1000px;"></div>
 <script>
   var map = new Datamap({
@@ -33,7 +37,8 @@
                 var education = (data.education === "YES" ? '<strong class="text-success">Education: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Education: <i class="fa fa-times"></i> NONE</strong>');
                 var agricultureAndLivestock = (data.agricultureAndLivestock === "YES" ? '<strong class="text-success">Agricultural and Livestock: <i class="fa fa-check"></i> YES</strong>' : '<strong class="text-danger">Agricultural and Livestock: <i class="fa fa-times"></i> NONE</strong>');
                 return ['<div class="hoverinfo"><strong>',
-                        geo.properties.name + ' County' + '</strong><br/>',
+                        geo.properties.name + ' County' + '</strong><br/><br/>',
+                        '<strong>County Initiatives and Projects</strong>'
                         financialInstitutions + '<br/>',
                         womenYouthAndDisabled + '<br/>',
                         waterSanitationAndHealth + '<br/>',
