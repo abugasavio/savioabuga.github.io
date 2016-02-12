@@ -13,9 +13,16 @@
     <![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="http://rawgithub.com/markmarkoh/datamaps/master/dist/datamaps.none.min.js"></script>
+    <!-- highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
 </head>
 <body>
 <div class="page-header text-center">
@@ -23,6 +30,7 @@
   <h2><small>Review and Analysis of County Website Information about Sectors and Groups</small></h2>
 </div>
 <div id="kecounties" style="height: 600px; width: 1000px;"></div>
+<div id="container" style="height: 600px; min-width: 1400px; max-width: 1200px; margin: 0 auto"></div>
 <script>
   var map = new Datamap({
     element: document.getElementById('kecounties'),
@@ -448,8 +456,457 @@
   });
   map.legend();
 </script>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+  $(function () {
+
+    $('#container').highcharts({
+
+        chart: {
+            type: 'heatmap',
+            marginTop: 40,
+            marginBottom: 80,
+            plotBorderWidth: 1
+        },
+
+
+        title: {
+            text: 'County Initiatives and Projects'
+        },
+
+        xAxis: {
+            categories: ['Kilifi', 'Kwale', 'Lamu', 'Mombasa', 'Taita Taveta', 'Tana River', 'Embu', 'Kiambu', 'Kirinyaga',
+                         'Laikipia', 'Meru', 'Murang\'a', 'Nyandarua', 'Nyeri', 'Tharaka Nithi', 'Baringo', 'Elgeyo Marakwet',
+                         'Nandi', 'Samburu', 'Trans Nzoia', 'Turkana', 'Uasin Gishu', 'West Pokot', 'Bomet', 'Bungoma',
+                         'Busia', 'Homa Bay', 'Kakamega', 'Kericho', 'Kisii', 'Kisumu', 'Migori', 'Nyamira', 'Siaya', 'Vihiga',
+                         'Garissa', 'Isiolo', 'Kajiado', 'Kitui', 'Machakos', 'Makueni', 'Mandera', 'Marsabit', 'Nairobi', 'Nakuru',
+                         'Narok', 'Wajir'
+                         ]
+        },
+
+        yAxis: {
+            categories: ['Financial Institutions (SACCOS)', 'Women, Youth & Disabled', 'Water, Sanitation and Health', 'SMEs', 'Education', 'Agriculture and Livestock'],
+            title: null
+        },
+
+        colorAxis: {
+            min: 0,
+            max: 1,
+            minColor: '#ffffff',
+            maxColor: '#ff6600'
+
+        },
+
+        legend: {
+            enabled: false,
+            align: 'right',
+            layout: 'vertical',
+            margin: 0,
+            verticalAlign: 'top',
+            y: 25,
+            symbolHeight: 280
+        },
+
+        tooltip: {
+
+
+            formatter: function () {
+                var yesNo = (this.point.value == "1" ? " an ": "<strong> NO </strong>");
+                return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> has' + yesNo + 'initiative <br><b>' +
+                     '</b> on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+            }
+        },
+
+        series: [{
+            name: 'Sales per employee',
+            borderWidth: 1,
+            data: [
+                   // Kilifi
+                   [0, 0, 0],
+                   [0, 1, 1],
+                   [0, 2, 1],
+                   [0, 3, 0],
+                   [0, 4, 1],
+                   [0, 5, 1],
+
+                   // Kwale
+                   [1, 0, 0],
+                   [1, 1, 0],
+                   [1, 2, 0],
+                   [1, 3, 0],
+                   [1, 4, 1],
+                   [1, 5, 1],
+
+                   // Lamu
+                   [2, 0, 0],
+                   [2, 1, 0],
+                   [2, 2, 0],
+                   [2, 3, 0],
+                   [2, 4, 0],
+                   [2, 5, 0],
+
+                   // Mombasa
+                   [3, 0, 0],
+                   [3, 1, 1],
+                   [3, 2, 1],
+                   [3, 3, 0],
+                   [3, 4, 1],
+                   [3, 5, 0],
+
+                   // Taita Taveta
+                   [4, 0, 0],
+                   [4, 1, 0],
+                   [4, 2, 0],
+                   [4, 3, 0],
+                   [4, 4, 1],
+                   [4, 5, 1],
+
+                   // Tana River
+                   [5, 0, 0],
+                   [5, 1, 0],
+                   [5, 2, 0],
+                   [5, 3, 0],
+                   [5, 4, 0],
+                   [5, 5, 0],
+
+                   // Embu
+                   [6, 0, 0],
+                   [6, 1, 1],
+                   [6, 2, 1],
+                   [6, 3, 0],
+                   [6, 4, 1],
+                   [6, 5, 1],
+
+                   // Kiambu
+                   [7, 0, 1],
+                   [7, 1, 1],
+                   [7, 2, 0],
+                   [7, 3, 0],
+                   [7, 4, 1],
+                   [7, 5, 1],
+
+
+                   // Kirinyaga
+                   [8, 0, 1],
+                   [8, 1, 1],
+                   [8, 2, 1],
+                   [8, 3, 1],
+                   [8, 4, 0],
+                   [8, 5, 1],
+
+                   // Laikipia
+                   [9, 0, 1],
+                   [9, 1, 1],
+                   [9, 2, 1],
+                   [9, 3, 1],
+                   [9, 4, 1],
+                   [9, 5, 1],
+
+                   // Meru
+                   [10, 0, 1],
+                   [10, 1, 1],
+                   [10, 2, 1],
+                   [10, 3, 1],
+                   [10, 4, 1],
+                   [10, 5, 1],
+
+                   // Murang'a
+                   [11, 0, 1],
+                   [11, 1, 1],
+                   [11, 2, 1],
+                   [11, 3, 0],
+                   [11, 4, 1],
+                   [11, 5, 1],
+
+                   // Nyandarua
+                   [12, 0, 1],
+                   [12, 1, 1],
+                   [12, 2, 1],
+                   [12, 3, 1],
+                   [12, 4, 1],
+                   [12, 5, 1],
+
+                   // Nyeri
+                   [13, 0, 0],
+                   [13, 1, 1],
+                   [13, 2, 1],
+                   [13, 3, 0],
+                   [13, 4, 1],
+                   [13, 5, 0],
+
+                   // Tharaka Nithi
+                   [14, 0, 0],
+                   [14, 1, 1],
+                   [14, 2, 1],
+                   [14, 3, 0],
+                   [14, 4, 1],
+                   [14, 5, 0],
+
+                   // Baringo
+                   [15, 0, 0],
+                   [15, 1, 1],
+                   [15, 2, 1],
+                   [15, 3, 1],
+                   [15, 4, 1],
+                   [15, 5, 1],
+
+
+                   // Elgeyo Marakwet
+                   [16, 0, 1],
+                   [16, 1, 1],
+                   [16, 2, 1],
+                   [16, 3, 1],
+                   [16, 4, 1],
+                   [16, 5, 1],
+
+                   // Nandi
+                   [17, 0, 1],
+                   [17, 1, 1],
+                   [17, 2, 1],
+                   [17, 3, 1],
+                   [17, 4, 1],
+                   [17, 5, 1],
+
+                   // Samburu
+                   [18, 0, 1],
+                   [18, 1, 0],
+                   [18, 2, 1],
+                   [18, 3, 1],
+                   [18, 4, 1],
+                   [18, 5, 1],
+
+                   // Trans Nzoia
+                   [19, 0, 1],
+                   [19, 1, 1],
+                   [19, 2, 1],
+                   [19, 3, 1],
+                   [19, 4, 0],
+                   [19, 5, 0],
+
+                   // Turkana
+                   [20, 0, 1],
+                   [20, 1, 1],
+                   [20, 2, 1],
+                   [20, 3, 1],
+                   [20, 4, 1],
+                   [20, 5, 1],
+
+                   // Uasin Gishu
+                   [21, 0, 1],
+                   [21, 1, 1],
+                   [21, 2, 1],
+                   [21, 3, 1],
+                   [21, 4, 1],
+                   [21, 5, 1],
+
+                   // West Pokot
+                   [22, 0, 1],
+                   [22, 1, 0],
+                   [22, 2, 1],
+                   [22, 3, 1],
+                   [22, 4, 1],
+                   [22, 5, 1],
+
+                   // Bomet
+                   [23, 0, 0],
+                   [23, 1, 1],
+                   [23, 2, 0],
+                   [23, 3, 1],
+                   [23, 4, 1],
+                   [23, 5, 1],
+
+                   // Bungoma
+                   [24, 0, 0],
+                   [24, 1, 0],
+                   [24, 2, 0],
+                   [24, 3, 0],
+                   [24, 4, 0],
+                   [24, 5, 0],
+
+                   // Busia
+                   [25, 0, 0],
+                   [25, 1, 1],
+                   [25, 2, 1],
+                   [25, 3, 0],
+                   [25, 4, 1],
+                   [25, 5, 1],
+                   // Homa Bay
+                   [26, 0, 1],
+                   [26, 1, 1],
+                   [26, 2, 0],
+                   [26, 3, 0],
+                   [26, 4, 1],
+                   [26, 5, 1],
+
+                    // Kakamega
+                   [27, 0, 1],
+                   [27, 1, 1],
+                   [27, 2, 0],
+                   [27, 3, 0],
+                   [27, 4, 1],
+                   [27, 5, 1],
+                   // Kericho
+                   [28, 0, 0],
+                   [28, 1, 0],
+                   [28, 2, 0],
+                   [28, 3, 0],
+                   [28, 4, 0],
+                   [28, 5, 0],
+                   // Kisii
+                   [29, 0, 0],
+                   [29, 1, 0],
+                   [29, 2, 0],
+                   [29, 3, 1],
+                   [29, 4, 0],
+                   [29, 5, 1],
+                   // Kisumu
+                   [30, 0, 0],
+                   [30, 1, 1],
+                   [30, 2, 0],
+                   [30, 3, 1],
+                   [30, 4, 1],
+                   [30, 5, 1],
+
+                   // Migori
+                   [31, 0, 0],
+                   [31, 1, 0],
+                   [31, 2, 0],
+                   [31, 3, 0],
+                   [31, 4, 0],
+                   [31, 5, 0],
+
+                   // Nyamira
+                   [32, 0, 0],
+                   [32, 1, 0],
+                   [32, 2, 0],
+                   [32, 3, 0],
+                   [32, 4, 1],
+                   [32, 5, 1],
+
+
+                   // Siaya
+                   [33, 0, 0],
+                   [33, 1, 1],
+                   [33, 2, 0],
+                   [33, 3, 0],
+                   [33, 4, 1],
+                   [33, 5, 1],
+
+                   // Vihiga
+                   [34, 0, 1],
+                   [34, 1, 0],
+                   [34, 2, 1],
+                   [34, 3, 1],
+                   [34, 4, 1],
+                   [34, 5, 1],
+
+                   // Garissa
+                   [35, 0, 0],
+                   [35, 1, 1],
+                   [35, 2, 1],
+                   [35, 3, 0],
+                   [35, 4, 1],
+                   [35, 5, 1],
+
+                   // Isiolo
+                   [36, 0, 0],
+                   [36, 1, 0],
+                   [36, 2, 0],
+                   [36, 3, 0],
+                   [36, 4, 0],
+                   [36, 5, 0],
+
+                   // Kajiado
+                   [37, 0, 0],
+                   [37, 1, 1],
+                   [37, 2, 1],
+                   [37, 3, 1],
+                   [37, 4, 1],
+                   [37, 5, 1],
+
+                   // Kitui
+                   [38, 0, 1],
+                   [38, 1, 1],
+                   [38, 2, 1],
+                   [38, 3, 1],
+                   [38, 4, 1],
+                   [38, 5, 1],
+
+
+                   // Machakos
+                   [39, 0, 0],
+                   [39, 1, 1],
+                   [39, 2, 1],
+                   [39, 3, 1],
+                   [39, 4, 1],
+                   [39, 5, 0],
+
+                   // Makueni
+                   [40, 0, 1],
+                   [40, 1, 1],
+                   [40, 2, 1],
+                   [40, 3, 1],
+                   [40, 4, 1],
+                   [40, 5, 1],
+
+                   // Mandera
+                   [41, 0, 1],
+                   [41, 1, 1],
+                   [41, 2, 1],
+                   [41, 3, 1],
+                   [41, 4, 1],
+                   [41, 5, 1],
+
+                   // Marsabit
+                   [42, 0, 1],
+                   [42, 1, 1],
+                   [42, 2, 1],
+                   [42, 3, 1],
+                   [42, 4, 1],
+                   [42, 5, 1],
+
+                   // Nairobi
+                   [43, 0, 0],
+                   [43, 1, 0],
+                   [43, 2, 1],
+                   [43, 3, 1],
+                   [43, 4, 0],
+                   [43, 5, 0],
+
+                   // Nakuru
+                   [44, 0, 1],
+                   [44, 1, 1],
+                   [44, 2, 1],
+                   [44, 3, 1],
+                   [44, 4, 1],
+                   [44, 5, 1],
+
+                   // Narok
+                   [45, 0, 1],
+                   [45, 1, 1],
+                   [45, 2, 1],
+                   [45, 3, 0],
+                   [45, 4, 1],
+                   [45, 5, 1],
+
+                   // Wajir
+                   [46, 0, 0],
+                   [46, 1, 1],
+                   [46, 2, 1],
+                   [46, 3, 0],
+                   [46, 4, 1],
+                   [46, 5, 1],
+                   ],
+            dataLabels: {
+                enabled: false,
+                color: '#000000',
+                borderColor: '#ff9900'
+            }
+        }]
+
+    });
+});
+</script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">s</script>
 </body>
